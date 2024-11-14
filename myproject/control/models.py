@@ -17,8 +17,17 @@ class User(models.Model):
         choices=ACADEMIC_YEAR_CHOICES
     )
     email = models.EmailField(unique=True)
-    profile_image = models.ImageField(upload_to='profiles/%y/%m/%d', null=True, blank=True)
+    profile_image = models.ImageField(upload_to='profiles/%y/%m/%d',default='templates/default.png', null=True, blank=True)
     join_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user_name
+    
+    class Meta:
+        ordering=["user_name"]
+
+
+
 
 
 class Request(models.Model):
@@ -37,4 +46,10 @@ class Request(models.Model):
     ) 
     request_date = models.DateTimeField(auto_now_add=True)
     request_description = models.TextField()  
-    related_file = models.FileField(upload_to='request_files/%y/%m/%d', null=True, blank=True)
+    related_file = models.FileField(upload_to='request_files/%y/%m/%d')
+    def __str__(self):
+        return self.user.user_name
+    class Meta:
+        ordering=["user"]
+
+

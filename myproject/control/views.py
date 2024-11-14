@@ -5,7 +5,8 @@ from .models import Request
 
 def user_profile(request):
 
-    return render(request,'control/user_profile.html',{'user':'yassin'})
+    return render(request, 'control/user_profile.html')
+
 
 def requests(request):
 
