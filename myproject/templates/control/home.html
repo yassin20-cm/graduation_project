@@ -6,15 +6,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>wellcom</h1> <br>
-    {% for request in requests %}
+    <h1>Welcome</h1> <br>
     
+    {% for request in requests %}
         <h1>{{ request.request_description }}</h1>
         <p>Status: {{ request.request_state }}</p>
-        <p>user: {{ request.user.user_name }}</p>
-        <p>request_date : {{ request.request_date }}</p>
+        <p>User: <a href="{% url 'user_detail' request.user.user_id %}">{{ request.user.user_name }}</a></p>  <!-- Link to user profile -->
+        <p>on : {{ request.request_date }}</p>
+    {% endfor %}
     
-{% endfor %}
-
 </body>
 </html>

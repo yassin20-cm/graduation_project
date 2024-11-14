@@ -8,6 +8,7 @@ class User(models.Model):
         ('second_year', 'Second Year'),
         ('third_year', 'Third Year'),
         ('fourth_year', 'Fourth Year'),
+        ('Graduated','Graduated'),
     ]
     
     user_id = models.AutoField(primary_key=True)  
