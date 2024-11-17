@@ -4,11 +4,34 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import User
 from .models import Request
 from .forms import RequestForm,RequestStatusForm
+from .forms import UserSignupForm
+from django.contrib.auth import login
+
 # Create your views here.
 
 def requests(request):
 
-    return render(request, 'control/home.html', {'requests': Request.objects.all()})
+    return render(request, 'control/home.html', {'requests': Request.objects.all().order_by('-request_date')})
+
+def login(request):
+
+    return render(request,'control/login.html')
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserSignupForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])  
+            user.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserSignupForm()
+
+    return render(request, 'control/signup.html', {'form': form})
+
 
 
 def user_detail(request, user_id):
