@@ -16,21 +16,7 @@ class RequestStatusForm(forms.ModelForm):
         fields = ['request_state']
 
 
-class UserSignupForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
-
+class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['user_name', 'email', 'academic_year', 'profile_image']
-
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get('password')
-        confirm_password = cleaned_data.get('confirm_password')
-
-        if password != confirm_password:
-            raise forms.ValidationError("Passwords do not match.")
-        
-        return cleaned_data
-    
+        fields = ['user_name', 'academic_year', 'email']
