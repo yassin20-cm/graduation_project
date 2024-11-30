@@ -3,16 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>HOME</title>
+    <style>
+        h1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10vh;
+            margin: 0;
+            text-align: center;
+            color: #34dbdb;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome</h1> <br>
+    <h1>Welcome in ينتفع به </h1> <br><hr>
     
     {% for request in requests %}
-        <h1>{{ request.request_description }}</h1>
-        <p>Status: {{ request.request_state }}</p>
-        <p>User: <a href="{% url 'user_detail' request.user.user_id %}">{{ request.user.user_name }}</a></p>  <!-- Link to user profile -->
-        <p>on : {{ request.request_date }}</p>
+        <h3>{{ request.request_description }}</h3>
+        <p><strong>Status : </strong> {{ request.request_state }}</p>
+        <p><strong>User : </strong> <a href="{% url 'user_detail' request.user.user_id %}">{{ request.user.user_name }}</a></p>
+        <p><strong>at : </strong>{{ request.request_date }}</p> 
+        <br> <hr>
     {% endfor %}
     
 </body>

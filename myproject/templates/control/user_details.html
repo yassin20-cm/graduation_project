@@ -1,14 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ user.user_name }}'s Profile</title>
-</head>
-<body>
-    <span><a href="{% url 'home' %}"><font size="20">Home</font></a></span>
-    <h1>{{ user.user_name }}'s Profile</h1>
-    <p><strong>Profile Image:</strong> <img src="{{ user.profile_image.url }}" alt="Profile Image" width="100"></p>
-    <p><strong>Name:</strong> {{ user.user_name }}</p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> ينتفع به</title>
+        <style>
+        
+            h1 {
+                color: #4c90af;
+            }
+            form {
+                display: inline-block;
+                margin-top: 20px;
+                text-align: left;
+            }
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+            input {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+            button {
+                background-color: #4ca3af;
+                color: white;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #45a049;
+            }
+            
+        
+        </style>
+    </head>
+<body >
+    <span><a href="{% url 'home' %}"><font size="20">Home</font></a></span> <br> <hr>
+    <p><strong></strong> <br><br> <img src="{{ user.profile_image.url }}" alt="Profile Image" width="100"></p>
+    <p><strong>user name:</strong> {{ user.user_name }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
     <p><strong>Academic Year:</strong> {{ user.get_academic_year_display }}</p>
     <p><strong>Join Date:</strong> {{ user.join_date }}</p>
@@ -24,13 +60,14 @@
     {% if user.requests.all %}
         <ul>
             {% for request in user.requests.all %}
-                <li>{{ request.request_description }} <br> status : {{ request.request_state }}  <br> on : {{ request.request_date }}</li>
+                <li>{{ request.request_description }} <br> <strong>status : </strong> {{ request.request_state }}  <br><strong> on : </strong>{{ request.request_date }}</li>
                 <select class="status-select" data-request-id="{{ request.request_id }}">
                     <option value="open" {% if request.request_state == "open" %}selected{% endif %}>Open</option>
                     <option value="closed" {% if request.request_state == "closed" %}selected{% endif %}>Closed</option>
                 </select>
             </div>
             </div>
+             <br> <br> <hr> <br> <br>
             {% endfor %}
         </ul>
     {% else %}

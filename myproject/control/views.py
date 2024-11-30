@@ -5,9 +5,7 @@ from .models import User
 from .models import Request
 from .forms import RequestForm,RequestStatusForm
 from django.contrib.auth import login
-from django.db.utils import IntegrityError
 from .forms import UserForm
-
 
 
 # Create your views here.
@@ -18,10 +16,10 @@ def requests(request):
 
 
 
+
 def login(request):
-
+   
     return render(request,'control/login.html')
-
 
 
 

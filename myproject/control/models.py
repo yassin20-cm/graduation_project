@@ -50,7 +50,7 @@ class Request(models.Model):
     request_description = models.TextField()  
     related_file = models.FileField(upload_to='request_files/%y/%m/%d')
     def __str__(self):
-        return self.user.user_name
+        return self.request_description
     class Meta:
         ordering=["user"]
 
