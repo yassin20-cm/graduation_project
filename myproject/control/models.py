@@ -1,31 +1,53 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.hashers import make_password,check_password
+
 
 # Create your models here.
 
+def validate_password_length(value):
+    if len(value) < 8:
+        raise ValidationError(
+            _('Password must be at least 8 characters long.'),
+            params={'value': value},
+        )
+    
+
+    
 class User(models.Model):
     ACADEMIC_YEAR_CHOICES = [
         ('first_year', 'First Year'),
         ('second_year', 'Second Year'),
         ('third_year', 'Third Year'),
         ('fourth_year', 'Fourth Year'),
-        ('Graduated','Graduated'),
+        ('Graduated', 'Graduated'),
     ]
     
-    user_id = models.AutoField(primary_key=True)  
-    user_name = models.CharField(max_length=255, unique=True) 
+    user_id = models.AutoField(primary_key=True)
+    user_name = models.CharField(max_length=255, unique=True)
+    password = models.CharField(
+        max_length=128,
+        null=False,
+        blank=False,
+        validators=[validate_password_length],
+        default='12345678'
+    )
     academic_year = models.CharField(
         max_length=20, 
         choices=ACADEMIC_YEAR_CHOICES
     )
     email = models.EmailField(unique=True)
-    profile_image = models.ImageField(upload_to='profiles/%y/%m/%d',default='/profiles/24/11/20/default.jpg', null=True, blank=True)
+    profile_image = models.ImageField(upload_to='profiles/%y/%m/%d', default='/profiles/24/11/20/default.jpg', null=True, blank=True)
     join_date = models.DateTimeField(auto_now_add=True)
+
+
 
     def __str__(self):
         return self.user_name
     
     class Meta:
-        ordering=["user_name"]
+        ordering = ["user_name"]
 
 
 

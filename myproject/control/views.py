@@ -4,9 +4,10 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import User
 from .models import Request
 from .forms import RequestForm,RequestStatusForm
-from django.contrib.auth import login
-from .forms import UserForm
-
+from .forms import SignupForm,UserLoginForm
+from django.shortcuts import render, redirect
+from .forms import UserLoginForm
+from django.contrib import messages
 
 # Create your views here.
 
@@ -17,22 +18,42 @@ def requests(request):
 
 
 
-def login(request):
-   
-    return render(request,'control/login.html')
+def user_login(request):
+    if request.method == "POST":
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            user_name = form.cleaned_data['user_name']
+            password = form.cleaned_data['password']
+
+            try:
+                user = User.objects.get(user_name=user_name)
+                
+                if user.password == password:
+                    
+                    request.session['user_id'] = user.user_id
+                    return redirect('home')
+                else:
+                    form.add_error('password', 'Invalid username or password.')
+            except User.DoesNotExist:
+                form.add_error('user_name', 'User not found.')
+
+    else:
+        form = UserLoginForm()
+
+    return render(request, 'control/login.html', {'form': form})
 
 
 
 def signup(request):
     if request.method == 'POST':
-        form = UserForm(request.POST)
+        form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
             return render(request, 'control/signup.html', {'message': 'Signup successful!'})
         else:
             return render(request, 'control/signup.html', {'form': form})
     else:
-        form = UserForm()
+        form = SignupForm()
     return render(request, 'control/signup.html', {'form': form})
 
 
@@ -62,6 +83,9 @@ def user_detail(request, user_id):
         form = RequestForm()
 
     return render(request, 'control/user_details.html', {'user': user, 'form': form, 'requests': user.requests.all()})
+
+
+
 
 
 

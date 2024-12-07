@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>log in</title>
 </head>
 <body align="center">
     <h1>WELLCOM IN  ينتفع به</h1>
@@ -11,15 +11,33 @@
     <br>
     <h2>Login</h2>
     
-    <form method="POST">
+    <form method="POST" class="mt-4">
         {% csrf_token %}
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" required><br><br>
+        <div class="form-group">
+            <label for="user_name">Username</label>
+            {{ form.user_name }}
+            {% if form.user_name.errors %}
+                <div class="text-danger">
+                    {% for error in form.user_name.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
 
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required><br><br>
+        <div class="form-group">
+            <label for="password">Password</label>
+            {{ form.password }}
+            {% if form.password.errors %}
+                <div class="text-danger">
+                    {% for error in form.password.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
 
-        <button type="submit">Login</button>
+        <button type="submit" class="btn btn-primary">Login</button>
     </form>
 
     <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>

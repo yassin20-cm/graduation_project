@@ -15,7 +15,18 @@ class RequestStatusForm(forms.ModelForm):
         fields = ['request_state']
 
 
-class UserForm(forms.ModelForm):
+class SignupForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['user_name', 'academic_year', 'email']
+        fields = ['user_name', 'academic_year', 'email','password']
+
+
+class UserLoginForm(forms.Form):
+    user_name = forms.CharField(
+        max_length=255,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter your username', 'class': 'form-control'}),
+    )
+    password = forms.CharField(
+        max_length=128,
+        widget=forms.PasswordInput(attrs={'placeholder': 'Enter your password', 'class': 'form-control'}),
+    )
