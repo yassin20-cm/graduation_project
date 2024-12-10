@@ -22,7 +22,7 @@
     {% for request in requests %}
         <h3>{{ request.request_description }}</h3>
         <p><strong>Status : </strong> {{ request.request_state }}</p>
-        <p><strong>User : </strong> <a href="{% url 'user_detail' request.user.user_id %}">{{ request.user.user_name }}</a></p>
+        <p><strong>User : </strong> <a href="{% url 'user_profile' request.user.user_id %}">{{ request.user.user_name }}</a></p>
         <p><strong>at : </strong>{{ request.request_date }}</p> 
         <br> <hr>
     {% endfor %}

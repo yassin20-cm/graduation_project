@@ -12,9 +12,15 @@ from django.contrib import messages
 # Create your views here.
 
 def requests(request):
+    user = None
+    if 'user_id' in request.session:
+        try:
+            user = User.objects.get(user_id=request.session['user_id'])
+        except User.DoesNotExist:
+            pass
 
-    return render(request, 'control/home.html', {'requests': Request.objects.all().order_by('-request_date')})
-
+    all_requests = Request.objects.all().order_by('-request_date')
+    return render(request, 'control/home.html', {'requests': all_requests, 'user': user})
 
 
 
@@ -60,31 +66,38 @@ def signup(request):
 
 
 def user_detail(request, user_id):
-    user = get_object_or_404(User, user_id=user_id) 
-
+    user = get_object_or_404(User, user_id=user_id)
     
-    if request.method == 'POST' and 'create_request' in request.POST:
-        form = RequestForm(request.POST, request.FILES)
-        if form.is_valid():
-            new_request = form.save(commit=False)
-            new_request.user = user 
-            new_request.save()
-            return redirect('user_detail', user_id=user.id)
+    create_request_form = RequestForm()
+    update_status_form = None
 
-    
-    elif request.method == 'POST' and 'update_status' in request.POST:
-        request_id = request.POST.get('request_id')
-        request_to_update = get_object_or_404(Request, request_id=request_id, user=user)
-        form = RequestStatusForm(request.POST, instance=request_to_update)
-        if form.is_valid():
-            form.save()
-            return redirect('user_detail', user_id=user.id)
-    else:
-        form = RequestForm()
+    if request.method == 'POST':
+        if 'create_request' in request.POST:  # Handle create request form submission
+            create_request_form = RequestForm(request.POST, request.FILES)
+            if create_request_form.is_valid():
+                new_request = create_request_form.save(commit=False)
+                new_request.user = user
+                new_request.save()
+                return redirect('user_profile', user_id=user.id)
 
-    return render(request, 'control/user_details.html', {'user': user, 'form': form, 'requests': user.requests.all()})
+        elif 'update_status' in request.POST:  # Handle update status form submission
+            request_id = request.POST.get('request_id')
+            request_to_update = get_object_or_404(Request, request_id=request_id, user=user)
+            update_status_form = RequestStatusForm(request.POST, instance=request_to_update)
+            if update_status_form.is_valid():
+                update_status_form.save()
+                return redirect('user_profile', user_id=user.id)
+            else:
+                update_status_form = RequestStatusForm(instance=request_to_update)
 
-
+    requests = user.requests.all()  # Assuming related_name="requests" in the Request model
+    context = {
+        'user': user,
+        'create_request_form': create_request_form,
+        'update_status_form': update_status_form,
+        'requests': requests,
+    }
+    return render(request, 'control/user_profile.html', context)
 
 
 
