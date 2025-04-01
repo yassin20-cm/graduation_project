@@ -1,10 +1,15 @@
 from django.contrib import admin
-from .models import User
-from .models import Request
+from .models import User, Request
 
-# Register your models here.
-admin.site.site_header='ينتفع به'
-admin.site.site_title='ينتفع به'
+# Customizing admin panel titles
+admin.site.site_header = 'ينتفع به'
+admin.site.site_title = 'ينتفع به'
+
+class RequestInline(admin.TabularInline): 
+    model = Request
+    extra = 0  
+    fields = ('request_state', 'request_description', 'related_file', 'request_date')
+    readonly_fields = ('request_date',) 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
@@ -18,11 +23,9 @@ class UserAdmin(admin.ModelAdmin):
         }),
         ('Other Details', {
             'fields': ('join_date',)
-            }),
-
+        }),
     )
-
-
+    inlines = [RequestInline] 
 
 @admin.register(Request)
 class RequestAdmin(admin.ModelAdmin):
@@ -39,7 +42,3 @@ class RequestAdmin(admin.ModelAdmin):
         }),
     )
     list_per_page = 20
-
-
-
-

@@ -64,33 +64,31 @@ def signup(request):
 
 
 
-
 def user_detail(request, user_id):
-    user = get_object_or_404(User, user_id=user_id)
-    
+    user = get_object_or_404(User, user_id=user_id)  
     create_request_form = RequestForm()
     update_status_form = None
 
     if request.method == 'POST':
-        if 'create_request' in request.POST:  # Handle create request form submission
+        if 'create_request' in request.POST: 
             create_request_form = RequestForm(request.POST, request.FILES)
             if create_request_form.is_valid():
                 new_request = create_request_form.save(commit=False)
                 new_request.user = user
                 new_request.save()
-                return redirect('user_profile', user_id=user.id)
+                return redirect('user_profile', user_id=user.user_id)  
 
-        elif 'update_status' in request.POST:  # Handle update status form submission
+        elif 'update_status' in request.POST: 
             request_id = request.POST.get('request_id')
-            request_to_update = get_object_or_404(Request, request_id=request_id, user=user)
+            request_to_update = get_object_or_404(Request, request_id=request_id, user=user) 
             update_status_form = RequestStatusForm(request.POST, instance=request_to_update)
             if update_status_form.is_valid():
                 update_status_form.save()
-                return redirect('user_profile', user_id=user.id)
+                return redirect('user_profile', user_id=user.user_id)  
             else:
                 update_status_form = RequestStatusForm(instance=request_to_update)
 
-    requests = user.requests.all()  # Assuming related_name="requests" in the Request model
+    requests = user.requests.all()  
     context = {
         'user': user,
         'create_request_form': create_request_form,
@@ -98,8 +96,6 @@ def user_detail(request, user_id):
         'requests': requests,
     }
     return render(request, 'control/user_profile.html', context)
-
-
 
 
 @csrf_exempt  

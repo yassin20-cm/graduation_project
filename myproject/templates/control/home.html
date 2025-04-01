@@ -3,29 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ينتفع بة</title>
+    <title>ينتفع به</title>
     <style>
-        h1 {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 10vh;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
+            padding: 0;
+        }
+
+        .header {
             text-align: center;
+            background-color: #34dbdb;
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        /* Request Card */
+        .request-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .request-card:hover {
+            transform: scale(1.02);
+        }
+
+        .request-title {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .request-info {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .request-info strong {
             color: #34dbdb;
+        }
+
+        .user-link {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .user-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome in ينتفع به </h1> <br><hr>
-    
-    {% for request in requests %}
-        <h3>{{ request.request_description }}</h3>
-        <p><strong>Status : </strong> {{ request.request_state }}</p>
-        <p><strong>User : </strong> <a href="{% url 'user_profile' request.user.user_id %}">{{ request.user.user_name }}</a></p>
-        <p><strong>at : </strong>{{ request.request_date }}</p> 
-        <br> <hr>
-    {% endfor %}
-    
+
+    <div class="header">مرحبًا بك في ينتفع به</div>
+
+    <div class="container">
+        {% for request in requests %}
+            <div class="request-card">
+                <h3 class="request-title">{{ request.request_description }}</h3>
+                <p class="request-info"><strong>الحالة:</strong> {{ request.request_state }}</p>
+                <p class="request-info"><strong>المستخدم:</strong> 
+                    <a class="user-link" href="{% url 'user_profile' request.user.user_id %}">
+                        {{ request.user.user_name }}
+                    </a>
+                </p>
+                <p class="request-info"><strong>التاريخ:</strong> {{ request.request_date }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
 </body>
 </html>
