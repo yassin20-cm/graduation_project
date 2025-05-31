@@ -8,6 +8,8 @@ from .forms import SignupForm,UserLoginForm
 from django.shortcuts import render, redirect
 from .forms import UserLoginForm
 from django.contrib import messages
+from django.shortcuts import redirect
+
 
 # Create your views here.
 
@@ -17,11 +19,10 @@ def requests(request):
         try:
             user = User.objects.get(user_id=request.session['user_id'])
         except User.DoesNotExist:
-            pass
+            user = None
 
     all_requests = Request.objects.all().order_by('-request_date')
     return render(request, 'control/home.html', {'requests': all_requests, 'user': user})
-
 
 
 def user_login(request):
@@ -109,3 +110,10 @@ def update_request_status(request, request_id):
             return JsonResponse({'success': True})
         except Request.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'Request not found'})
+
+from django.shortcuts import redirect
+
+def user_logout(request):
+    if 'user_id' in request.session:
+        del request.session['user_id']
+    return redirect('login')
