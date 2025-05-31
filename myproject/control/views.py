@@ -37,7 +37,7 @@ def user_login(request):
                 if user.password == password:
                     
                     request.session['user_id'] = user.user_id
-                    return redirect('home')
+                    return redirect('user_profile',user_id=user.user_id)
                 else:
                     form.add_error('password', 'Invalid username or password.')
             except User.DoesNotExist:

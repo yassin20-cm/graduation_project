@@ -85,18 +85,13 @@
         <p><strong>Join Date:</strong> {{ user.join_date }}</p>
 
         <h2>Create a Request</h2>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            
-            <label for="id_request_description">Request Description:</label>
-            <textarea id="id_request_description" name="request_description" rows="4" required></textarea>
-        
-            <label for="id_related_file">Upload File:</label>
-            <input type="file" id="id_related_file" name="related_file">
-        
-            <button type="submit">Submit</button>
-        </form>
-    
+          <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="create_request" value="1">
+
+             {% csrf_token %}
+             {{ create_request_form.as_p }}
+             <button type="submit" name="create_request">Submit</button>
+          </form>
         <h2>Requests</h2>
         {% if user.requests.all %}
             <ul class="request-list">
