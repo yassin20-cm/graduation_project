@@ -18,7 +18,7 @@ class RequestStatusForm(forms.ModelForm):
 class SignupForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['user_name', 'academic_year', 'email','password']
+        fields = ['user_name', 'academic_year', 'email', 'password', 'phone_number']
 
 
 class UserLoginForm(forms.Form):

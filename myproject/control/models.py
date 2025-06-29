@@ -37,6 +37,7 @@ class User(models.Model):
         choices=ACADEMIC_YEAR_CHOICES
     )
     email = models.EmailField(unique=True)
+    phone_number = models.CharField(max_length=11, blank=True, null=True)
     profile_image = models.ImageField(upload_to='profiles/%y/%m/%d', default='/profiles/24/11/20/default.jpg', null=True, blank=True)
     join_date = models.DateTimeField(auto_now_add=True)
 

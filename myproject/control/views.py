@@ -10,6 +10,9 @@ from .forms import UserLoginForm
 from django.contrib import messages
 from django.shortcuts import redirect
 
+from rest_framework.response import Response
+from .serializers import RequestSerializer
+
 
 # Create your views here.
 
@@ -117,3 +120,12 @@ def user_logout(request):
     if 'user_id' in request.session:
         del request.session['user_id']
     return redirect('login')
+
+
+
+ 
+
+
+
+
+
