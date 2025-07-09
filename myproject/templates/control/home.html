@@ -1,104 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ينتفع به</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ينتفع به</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #f2f7f7;
+      margin: 0;
+      padding: 0;
+    }
 
-        .header {
-            text-align: center;
-            background-color: #34dbdb;
-            color: white;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
-        }
+    .header {
+      background: linear-gradient(135deg, #34dbdb, #00b2b2);
+      color: white;
+      padding: 25px 20px;
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      position: relative;
+    }
 
-        /* Container */
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-        }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
 
-        /* Request Card */
-        .request-card {
-            background: white;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
+    .request-card {
+      background: #ffffff;
+      padding: 25px;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease-in-out, box-shadow 0.3s;
+    }
 
-        .request-card:hover {
-            transform: scale(1.02);
-        }
+    .request-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
 
-        .request-title {
-            font-size: 20px;
-            color: #333;
-            margin-bottom: 10px;
-        }
+    .request-title {
+      font-size: 22px;
+      color: #222;
+      margin-bottom: 12px;
+    }
 
-        .request-info {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 5px;
-        }
+    .request-info {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 8px;
+    }
 
-        .request-info strong {
-            color: #34dbdb;
-        }
+    .request-info strong {
+      color: #00b2b2;
+    }
 
-        .user-link {
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
-        }
+    .user-link {
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+    }
 
-        .user-link:hover {
-            text-decoration: underline;
-        }
-    </style>
+    .user-link:hover {
+      text-decoration: underline;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .logout-btn {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #ff4d4d;
+      color: white;
+    }
+
+    .logout-btn:hover {
+      background-color: #e60000;
+    }
+
+    .profile-btn {
+      margin: 20px auto;
+      display: block;
+      background-color: #00b2b2;
+      color: white;
+      text-align: center;
+    }
+
+    .profile-btn:hover {
+      background-color: #009999;
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        font-size: 20px;
+        padding: 20px;
+      }
+
+      .request-card {
+        padding: 18px;
+      }
+
+      .logout-btn {
+        position: static;
+        transform: none;
+        display: block;
+        margin: 10px auto 0 auto;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="header">مرحبًا بك في ينتفع به</div>
+  <div class="header">
+    Welcome to ينتفع به
     {% if user %}
-    <a href="{% url 'user_logout' %}" 
-       style="position: absolute; right: 20px; top: 15%; transform: translateY(-50%);
-              background-color: #ff4d4d; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; font-weight: bold;">
-        تسجيل خروج
-    </a>
+      <a href="{% url 'user_logout' %}" class="btn logout-btn">Sign out</a>
     {% endif %}
+  </div>
 
-    {% if user %}
-    <a href="{% url 'user_profile' user.user_id %}" 
-       style="background-color: #34dbdb; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;">
-        رجوع إلى صفحتي
-    </a>
-    {% endif %}
-    <div class="container">
-        {% for request in requests %}
-            <div class="request-card">
-                <h3 class="request-title">{{ request.request_description }}</h3>
-                <p class="request-info"><strong>الحالة:</strong> {{ request.request_state }}</p>
-                <p class="request-info">
-                    <strong>المستخدم:</strong> 
-                    <span class="user-link">{{ request.user.user_name }}</span>
-                </p>
-                <p class="request-info"><strong>التاريخ:</strong> {{ request.request_date }}</p>
-            </div>
-        {% endfor %}
-    </div>
+  {% if user %}
+    <a href="{% url 'user_profile' user.user_id %}" class="btn profile-btn">Profile</a>
+  {% endif %}
+
+  <div class="container">
+    {% for request in requests %}
+      <div class="request-card">
+        <h3 class="request-title">{{ request.request_description }}</h3>
+        <p class="request-info"><strong>Mode:</strong> {{ request.request_state }}</p>
+        <p class="request-info">
+          <strong>User:</strong> <span class="user-link">{{ request.user.user_name }}</span>
+        </p>
+        <p class="request-info"><strong>Released:</strong> {{ request.request_date }}</p>
+      </div>
+    {% endfor %}
+  </div>
 
 </body>
 </html>

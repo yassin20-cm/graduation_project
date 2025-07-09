@@ -2,11 +2,10 @@ from django import forms
 from .models import Request
 from .models import User
 
-
 class RequestForm(forms.ModelForm):
     class Meta:
         model = Request
-        fields = ['request_description', 'related_file','request_state']
+        fields = ['request_description']
 
 
 class RequestStatusForm(forms.ModelForm):
@@ -18,7 +17,7 @@ class RequestStatusForm(forms.ModelForm):
 class SignupForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['user_name', 'academic_year', 'email', 'password', 'phone_number']
+        fields = ['user_name', 'academic_year', 'email', 'phone_number', 'password']
 
 
 class UserLoginForm(forms.Form):

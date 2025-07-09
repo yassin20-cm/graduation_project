@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import MinLengthValidator
+
 
 
 # Create your models here.
@@ -37,8 +39,13 @@ class User(models.Model):
         choices=ACADEMIC_YEAR_CHOICES
     )
     email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=11, blank=True, null=True)
-    profile_image = models.ImageField(upload_to='profiles/%y/%m/%d', default='/profiles/24/11/20/default.jpg', null=True, blank=True)
+    phone_number = models.CharField(
+    max_length=20,
+    validators=[MinLengthValidator(11)],
+    blank=True,
+    null=True
+)
+    profile_image = models.ImageField(upload_to='profiles/%y/%m/%d', default='/profiles/default.jpg', null=True, blank=True)
     join_date = models.DateTimeField(auto_now_add=True)
 
 
@@ -70,7 +77,6 @@ class Request(models.Model):
     ) 
     request_date = models.DateTimeField(auto_now_add=True)
     request_description = models.TextField()  
-    related_file = models.FileField(upload_to='request_files/%y/%m/%d')
     def __str__(self):
         return self.request_description
     class Meta:

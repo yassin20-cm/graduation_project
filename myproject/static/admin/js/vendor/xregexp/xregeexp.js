@@ -386,7 +386,7 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports["default"] = void 0;
 
-var _xregexp = _interopRequireDefault(require("./xregexp"));
+var _xregexp = _interopRequireDefault(require("./xregeexp.js"));
 
 var _unicodeBase = _interopRequireDefault(require("./addons/unicode-base"));
 

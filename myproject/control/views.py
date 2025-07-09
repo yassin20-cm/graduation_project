@@ -8,10 +8,9 @@ from .forms import SignupForm,UserLoginForm
 from django.shortcuts import render, redirect
 from .forms import UserLoginForm
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import make_password
 
-from rest_framework.response import Response
-from .serializers import RequestSerializer
 
 
 # Create your views here.
@@ -38,7 +37,7 @@ def user_login(request):
             try:
                 user = User.objects.get(user_name=user_name)
                 
-                if user.password == password:
+                if check_password(password, user.password):
                     
                     request.session['user_id'] = user.user_id
                     return redirect('user_profile',user_id=user.user_id)
@@ -58,6 +57,7 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
+            form.instance.password = make_password(form.cleaned_data['password'])
             form.save()
             return render(request, 'control/signup.html', {'message': 'Signup successful!'})
         else:
