@@ -1,74 +1,164 @@
-/* Basic reset */
+/* Reset */
 body, h1, p, button {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body styling */
+/* General body styling */
 body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(45deg, #ff6ec7, #ff9a8b, #ffb347, #ffcc33);
-    background-size: 400% 400%;
-    animation: gradientAnimation 10s ease infinite;
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #333;
+}
+
+/* Container */
+.signup-container {
+    background: rgba(255, 255, 255, 0.97);
+    padding: 35px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
     text-align: center;
+}
+
+/* Headings */
+.signup-container h1 {
+    color: #00b2b2;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.signup-container h2 {
+    color: #444;
+    font-size: 22px;
+    margin-bottom: 25px;
+}
+
+/* Form */
+form {
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: border 0.3s, box-shadow 0.3s;
+    color: #222;
+    background-color: #fff;
+}
+
+input:focus {
+    border-color: #00b2b2;
+    box-shadow: 0 0 0 3px rgba(0, 178, 178, 0.1);
+    outline: none;
+}
+
+/* Errors */
+.text-danger {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Buttons */
+.btn-primary, button {
+    background: linear-gradient(to right, #34dbdb, #00b2b2);
     color: white;
-    padding: 50px;
-    height: 100vh;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
 }
 
-/* Animation for gradient */
-@keyframes gradientAnimation {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+.btn-primary:hover, button:hover {
+    background: linear-gradient(to right, #28a6a6, #009999);
 }
 
-/* Styling the heading */
-h1 {
-    color: #fff;
-    font-size: 3em;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+/* Text */
+p {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Links */
+a {
+    color: #0077cc;
+    text-decoration: none;
     font-weight: bold;
 }
 
-/* Styling the paragraph */
-p {
-    font-size: 1.5em;
-    color: #f9f9f9;
-    line-height: 1.8;
-    margin-bottom: 30px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+a:hover {
+    text-decoration: underline;
 }
 
-/* Button styling */
-button {
-    background-color: #ff6ec7;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    cursor: pointer;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.2s ease;
+/* Responsive */
+@media (max-width: 480px) {
+    .signup-container {
+        padding: 25px 20px;
+    }
+
+    .signup-container h1 {
+        font-size: 24px;
+    }
+
+    .signup-container h2 {
+        font-size: 18px;
+    }
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #00b2b2;
+  padding: 15px 30px;
+  color: white;
+  font-family: 'Cairo', sans-serif;
+  border-bottom: 4px solid #009999;
 }
 
-/* Button hover effect */
-button:hover {
-    background-color: #ff9a8b;
-    transform: translateY(-2px);
+.header-title {
+  font-size: 22px;
+  font-weight: bold;
 }
 
-/* Button active state */
-button:active {
-    background-color: #ffb347;
-    transform: translateY(2px);
+.header-right a {
+  margin-left: 15px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  background: #009999;
+  padding: 10px 15px;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.header-right a:hover {
+  background: #007777;
 }

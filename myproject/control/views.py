@@ -24,7 +24,8 @@ def requests(request):
             user = None
 
     all_requests = Request.objects.all().order_by('-request_date')
-    return render(request, 'control/home.html', {'requests': all_requests, 'user': user})
+    return render(request, 'control/home.html', {'requests': all_requests, 'custom_user': user})
+
 
 
 def user_login(request):

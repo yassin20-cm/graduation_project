@@ -127,13 +127,13 @@
 
   <div class="header">
     Welcome to ينتفع به
-    {% if user %}
+    {% if custom_user %}
       <a href="{% url 'user_logout' %}" class="btn logout-btn">Sign out</a>
     {% endif %}
   </div>
 
-  {% if user %}
-    <a href="{% url 'user_profile' user.user_id %}" class="btn profile-btn">Profile</a>
+  {% if custom_user %}
+     <a href="{% url 'user_profile' custom_user.user_id %}" class="btn profile-btn">Profile</a>
   {% endif %}
 
   <div class="container">
